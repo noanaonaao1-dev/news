@@ -2,7 +2,6 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../components/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import AdSlot from '../../components/AdSlot.astro';
 import { CATEGORIES } from '../../utils/categories';
 
 export async function getStaticPaths() {
@@ -83,14 +82,6 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
         <Content />
       </div>
 
-      <div class="ad-middle-container">
-        <AdSlot />
-      </div>
-
-      <div class="ad-bottom-container mt-8">
-        <AdSlot />
-      </div>
-
       <div class="mt-12 pt-6 border-t border-gray-100">
         <p class="text-xs text-gray-400">
           出典：<a href={data.canonical || Astro.url} class="underline">{data.canonical || Astro.url}</a>
@@ -99,17 +90,6 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
     </div>
   </article>
 
-  <!-- Script to move the middle AdSlot after the 2nd paragraph if possible -->
-  <script is:inline>
-    const content = document.querySelector('#article-content');
-    const middleAdContainer = document.querySelector('.ad-middle-container');
-    if (content && middleAdContainer) {
-      const paragraphs = content.querySelectorAll('p');
-      if (paragraphs.length >= 2) {
-        paragraphs[1].after(middleAdContainer);
-      }
-    }
-  </script>
 </Layout>
 
 <style is:global>

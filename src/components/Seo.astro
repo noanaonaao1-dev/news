@@ -53,8 +53,13 @@ const jsonLd = type === 'article' ? {
 <!-- Canonical -->
 <link rel="canonical" href={canonicalUrl} />
 
-<!-- Monetag Verification -->
-{isHome && <meta name="monetag" content="f5848ab4423da0fe3b17afc905e0ce97" />}
+<!-- Site Verifications -->
+{isHome && (
+  <>
+    <meta name="monetag" content="f5848ab4423da0fe3b17afc905e0ce97" />
+    <meta name="google-site-verification" content="WwwPK2ldKQ2FR_L93CLr1gkbdgq0DIXEA_9QBWaCIm0" />
+  </>
+)}
 
 <!-- Primary Meta Tags -->
 <title>{fullTitle}</title>
