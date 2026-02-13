@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts');
+  const uniqueTags = [...new Set(allPosts.flatMap((post) => post.data.tags))];
+
+  return uniqueTags.map((tag) => ({
+    params: { slug: tag },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const allPosts = await getCollection('posts');
+const tagPosts = allPosts
+  .filter((post) => post.data.tags.includes(slug))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title={`#${slug} のニュース`}>
+  <Breadcrumbs items={[{ text: `#${slug}` }]} />
+
+  <div class="mb-8 border-b-2 border-navy-dark pb-2">
+    <h1 class="text-xl font-bold text-navy-dark flex items-center">
+      <span class="w-2 h-6 bg-navy-dark mr-2"></span>
+      #{slug}
+    </h1>
+  </div>
+
+  <div class="space-y-8">
+    {tagPosts.map((post) => (
+      <ArticleCard post={post} />
+    ))}
+  </div>
+</Layout>

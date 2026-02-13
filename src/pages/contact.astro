@@ -1,0 +1,37 @@
+---
+import Layout from '../components/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+---
+
+<Layout title="お問い合わせ">
+  <Breadcrumbs items={[{ text: 'お問い合わせ' }]} />
+
+  <article class="prose prose-slate max-w-none">
+    <h1 class="text-2xl font-bold text-navy mb-6">お問い合わせ</h1>
+
+    <div class="bg-gray-50 p-6 border border-gray-100 rounded">
+      <p class="mb-6 text-sm text-gray-600">
+        当サイトへのご意見、情報提供、広告掲載に関するお問い合わせなどは、以下のフォームよりお願いいたします。
+        （現在はプレースホルダーです。実際にはGoogle フォームや外部サービスを連携してください）
+      </p>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-1">お名前</label>
+          <input type="text" class="w-full border border-gray-300 p-2 rounded focus:ring-navy focus:border-navy" placeholder="例：山田 太郎" />
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-1">メールアドレス</label>
+          <input type="email" class="w-full border border-gray-300 p-2 rounded focus:ring-navy focus:border-navy" placeholder="example@geino-frontline.jp" />
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-1">お問い合わせ内容</label>
+          <textarea class="w-full border border-gray-300 p-2 rounded h-32 focus:ring-navy focus:border-navy"></textarea>
+        </div>
+        <button class="bg-navy hover:bg-navy-dark text-white font-bold py-2 px-6 rounded transition-colors">
+          送信する（デモ）
+        </button>
+      </div>
+    </div>
+  </article>
+</Layout>

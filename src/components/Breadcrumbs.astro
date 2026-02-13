@@ -1,0 +1,49 @@
+---
+interface Crumb {
+  text: string;
+  href?: string;
+}
+
+interface Props {
+  items: Crumb[];
+}
+
+const { items } = Astro.props;
+
+const breadcrumbs = [
+  { text: 'ホーム', href: '/' },
+  ...items
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbs.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.text,
+    "item": item.href ? `https://geino-frontline.jp${item.href}` : undefined
+  }))
+};
+---
+
+<nav class="flex text-xs text-gray-500 mb-6" aria-label="Breadcrumb">
+  <ol class="flex items-center space-x-2">
+    {breadcrumbs.map((item, index) => (
+      <li class="flex items-center">
+        {index > 0 && <span class="mx-2 text-gray-300">/</span>}
+        {item.href && index < breadcrumbs.length - 1 ? (
+          <a href={item.href} class="hover:text-navy transition-colors">
+            {item.text}
+          </a>
+        ) : (
+          <span class="text-gray-700 font-medium" aria-current="page">
+            {item.text}
+          </span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

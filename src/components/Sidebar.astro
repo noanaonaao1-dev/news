@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import { CATEGORIES } from '../utils/categories';
+
+const allPosts = await getCollection('posts');
+const latestPosts = allPosts
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
+---
+
+<aside class="space-y-10">
+  <!-- Popular/Latest Section -->
+  <div>
+    <h3 class="text-sm font-bold text-white bg-navy-dark px-3 py-1.5 mb-4 inline-block">注目ニュース</h3>
+    <ul class="space-y-4">
+      {latestPosts.map((post) => (
+        <li class="flex gap-3 group">
+          <a href={`/post/${post.slug}`} class="flex-shrink-0 w-16 h-16 overflow-hidden bg-gray-100">
+            <img
+              src={post.data.image}
+              alt={post.data.title}
+              width="64"
+              height="64"
+              loading="lazy"
+              class="w-full h-full object-cover"
+            />
+          </a>
+          <a href={`/post/${post.slug}`} class="text-xs font-bold leading-tight group-hover:text-navy transition-colors line-clamp-3">
+            {post.data.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- Categories Section -->
+  <div>
+    <h3 class="text-sm font-bold text-white bg-navy-dark px-3 py-1.5 mb-4 inline-block">カテゴリー</h3>
+    <ul class="border-t border-gray-100">
+      {Object.entries(CATEGORIES).map(([key, label]) => (
+        <li class="border-b border-gray-100">
+          <a href={`/category/${key}`} class="flex justify-between items-center py-2.5 text-sm text-gray-700 hover:text-navy hover:bg-gray-50 transition-colors px-1">
+            <span>{label}</span>
+            <span class="text-gray-300">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- About Section -->
+  <div class="bg-gray-50 p-4 border border-gray-100">
+    <h3 class="text-sm font-bold text-navy mb-2">芸能フロントラインについて</h3>
+    <p class="text-[11px] text-gray-600 leading-relaxed">
+      当サイトは、エンタメ業界の最新動向を正確かつ迅速にお伝えする芸能ニュースメディアです。編集部一同、信頼性の高い情報発信を心がけています。
+    </p>
+  </div>
+</aside>

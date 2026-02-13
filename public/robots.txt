@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://geino-frontline.jp/sitemap.xml
+Sitemap: https://geino-frontline.jp/news-sitemap.xml

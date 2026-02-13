@@ -1,0 +1,39 @@
+---
+const today = new Date();
+---
+
+<footer class="bg-gray-50 border-t border-gray-200 mt-12 py-10">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div>
+        <h2 class="text-lg font-bold text-navy mb-4">芸能フロントライン</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          芸能フロントラインは、女優、俳優、アイドル、映画、音楽など、エンタメ業界の最新ニュースをいち早くお届けするニュースサイトです。
+        </p>
+      </div>
+      <div>
+        <h3 class="text-md font-bold text-gray-800 mb-4">メニュー</h3>
+        <ul class="text-sm text-gray-600 space-y-2">
+          <li><a href="/about" class="hover:text-navy">当サイトについて</a></li>
+          <li><a href="/contact" class="hover:text-navy">お問い合わせ</a></li>
+          <li><a href="/policy" class="hover:text-navy">プライバシーポリシー</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-md font-bold text-gray-800 mb-4">配信</h3>
+        <ul class="text-sm text-gray-600 space-y-2">
+          <li><a href="/rss.xml" class="hover:text-navy">RSSフィード</a></li>
+          <li><a href="/sitemap.xml" class="hover:text-navy">サイトマップ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-200 pt-6 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-xs text-gray-500">
+        &copy; {today.getFullYear()} 芸能フロントライン編集部. All rights reserved.
+      </p>
+      <p class="text-[10px] text-gray-400 mt-2 md:mt-0">
+        記事の無断転載を禁じます。
+      </p>
+    </div>
+  </div>
+</footer>

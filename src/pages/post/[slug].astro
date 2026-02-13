@@ -1,0 +1,116 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import { CATEGORIES } from '../../utils/categories';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content } = await render(post);
+
+const categoryLabel = CATEGORIES[data.category as keyof typeof CATEGORIES];
+const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+});
+
+// For ad insertion, we would normally use a custom renderer or post-process the HTML.
+// In this basic version, we will instruct the user to use a placeholder or
+// we can attempt a simple string replace if we were rendering to string.
+// Since <Content /> is a component, we can't easily inject into it here.
+// Instead, I will use a wrapper that might help or just put ads around it.
+// BUT the requirement is "after 2nd paragraph".
+// A common Astro pattern is to use a "Slot" or just provide the Ad component to be used in MDX.
+// However, the user asked for Markdown (.md).
+---
+
+<Layout
+  title={data.title}
+  description={data.description}
+  image={data.image}
+  type="article"
+  publishedDate={data.date.toISOString()}
+  canonical={data.canonical}
+>
+  <Breadcrumbs items={[{ text: categoryLabel, href: `/category/${data.category}` }, { text: data.title }]} />
+
+  <article class="prose prose-slate max-w-none">
+    <header class="mb-8 border-b border-gray-100 pb-6">
+      <div class="flex items-center gap-2 mb-3">
+        <a href={`/category/${data.category}`} class="text-xs font-bold text-white bg-navy px-2 py-0.5 rounded">
+          {categoryLabel}
+        </a>
+      </div>
+      <h1 class="text-2xl md:text-3xl font-bold leading-tight mb-4 text-gray-900">
+        {data.title}
+      </h1>
+      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+        <div class="flex items-center">
+          <span class="mr-1">投稿日:</span>
+          <time datetime={data.date.toISOString()}>{formattedDate}</time>
+        </div>
+        <div class="flex items-center">
+          <span class="mr-1">著者:</span>
+          <span>{data.author}</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="article-body leading-relaxed text-gray-800 space-y-6">
+      <div class="mb-6">
+        <img
+          src={data.image}
+          alt={data.title}
+          width="800"
+          height="450"
+          class="w-full h-auto object-cover rounded shadow-sm"
+        />
+      </div>
+
+      <div id="article-content" class="content">
+        <Content />
+      </div>
+
+      <AdSlot />
+
+      <div class="mt-12 pt-6 border-t border-gray-100">
+        <p class="text-xs text-gray-400">
+          出典：<a href={data.canonical || Astro.url} class="underline">{data.canonical || Astro.url}</a>
+        </p>
+      </div>
+    </div>
+  </article>
+
+  <!-- Script to move the first AdSlot after the 2nd paragraph if possible -->
+  <script is:inline>
+    const content = document.querySelector('#article-content');
+    const adSlot = document.querySelector('.ad-slot');
+    if (content && adSlot) {
+      const paragraphs = content.querySelectorAll('p');
+      if (paragraphs.length >= 2) {
+        paragraphs[1].after(adSlot);
+      }
+    }
+  </script>
+</Layout>
+
+<style is:global>
+  .content h2 {
+    @apply text-xl font-bold text-navy border-l-4 border-navy pl-3 mb-4 mt-8;
+  }
+  .content p {
+    @apply mb-4 leading-loose;
+  }
+</style>

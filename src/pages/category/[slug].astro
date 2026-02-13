@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { CATEGORIES } from '../../utils/categories';
+
+export async function getStaticPaths() {
+  const categories = Object.keys(CATEGORIES);
+  return categories.map((slug) => ({
+    params: { slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const categoryLabel = CATEGORIES[slug as keyof typeof CATEGORIES];
+
+const allPosts = await getCollection('posts');
+const categoryPosts = allPosts
+  .filter((post) => post.data.category === slug)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title={`${categoryLabel} 一覧`}>
+  <Breadcrumbs items={[{ text: categoryLabel }]} />
+
+  <div class="mb-8 border-b-2 border-navy-dark pb-2">
+    <h1 class="text-xl font-bold text-navy-dark flex items-center">
+      <span class="w-2 h-6 bg-navy-dark mr-2"></span>
+      {categoryLabel} ニュース
+    </h1>
+  </div>
+
+  <div class="space-y-8">
+    {categoryPosts.map((post) => (
+      <ArticleCard post={post} />
+    ))}
+  </div>
+
+  {categoryPosts.length === 0 && (
+    <p class="text-gray-500 py-10 text-center">このカテゴリーの記事はまだありません。</p>
+  )}
+</Layout>

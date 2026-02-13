@@ -1,0 +1,50 @@
+---
+import Layout from '../components/Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+---
+
+<Layout title="当サイトについて">
+  <Breadcrumbs items={[{ text: '当サイトについて' }]} />
+
+  <article class="prose prose-slate max-w-none">
+    <h1 class="text-2xl font-bold text-navy mb-6">当サイトについて</h1>
+
+    <div class="space-y-6 text-gray-800 leading-relaxed">
+      <section>
+        <h2 class="text-xl font-bold border-b pb-2 mb-4">芸能フロントラインとは</h2>
+        <p>
+          「芸能フロントライン」は、エンターテインメント業界の最前線から、最新のニュースを正確かつ迅速にお届けする専門メディアです。
+          女優、俳優、アイドル、映画、音楽など、幅広いジャンルの情報を網羅し、読者の皆様に価値あるコンテンツを提供することを目指しています。
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold border-b pb-2 mb-4">編集方針</h2>
+        <p>
+          私たちは、事実に基づいた誠実な報道を第一に考えています。公式発表をベースにしつつ、多角的な視点からの解説を加え、
+          単なる速報に留まらない深掘りした記事制作を心がけています。
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold border-b pb-2 mb-4">運営者情報</h2>
+        <table class="min-w-full border-collapse border border-gray-200 text-sm">
+          <tbody>
+            <tr>
+              <th class="border border-gray-200 bg-gray-50 p-3 text-left w-1/3">サイト名</th>
+              <td class="border border-gray-200 p-3">芸能フロントライン</td>
+            </tr>
+            <tr>
+              <th class="border border-gray-200 bg-gray-50 p-3 text-left">運営組織</th>
+              <td class="border border-gray-200 p-3">芸能フロントライン編集部</td>
+            </tr>
+            <tr>
+              <th class="border border-gray-200 bg-gray-50 p-3 text-left">連絡先</th>
+              <td class="border border-gray-200 p-3">お問い合わせフォームよりご連絡ください。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </article>
+</Layout>

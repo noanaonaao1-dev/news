@@ -1,0 +1,75 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  type?: 'website' | 'article';
+  publishedDate?: string;
+  modifiedDate?: string;
+}
+
+const {
+  title,
+  description = "芸能フロントラインは、最新の芸能ニュース、女優、俳優、アイドル、映画などの情報を速報でお伝えするエンタメ情報サイトです。",
+  image = "https://geino-frontline.jp/og-default.webp",
+  canonical,
+  type = 'website',
+  publishedDate,
+  modifiedDate,
+} = Astro.props;
+
+const siteName = "芸能フロントライン";
+const fullTitle = title ? `${title} | ${siteName}` : siteName;
+const siteUrl = "https://geino-frontline.jp";
+const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).toString();
+
+const jsonLd = type === 'article' ? {
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": title,
+  "image": [image],
+  "datePublished": publishedDate,
+  "dateModified": modifiedDate || publishedDate,
+  "author": [{
+    "@type": "Person",
+    "name": "編集部",
+    "url": `${siteUrl}/about`
+  }],
+  "publisher": {
+    "@type": "Organization",
+    "name": "芸能フロントライン編集部",
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteUrl}/logo.png`
+    }
+  },
+  "description": description
+} : null;
+---
+
+<!-- Canonical -->
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Primary Meta Tags -->
+<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
+<meta name="description" content={description} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<meta property="og:site_name" content={siteName} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={fullTitle} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={image} />
+
+<!-- JSON-LD -->
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}

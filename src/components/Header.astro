@@ -1,0 +1,25 @@
+---
+import { CATEGORIES } from '../utils/categories';
+---
+
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row items-center justify-between py-4">
+      <div class="mb-4 md:mb-0">
+        <a href="/" class="text-2xl font-bold text-navy flex items-center">
+          <span class="mr-2">芸能フロントライン</span>
+        </a>
+        <p class="text-xs text-gray-500 mt-1">エンタメの最前線を速報でお届け</p>
+      </div>
+
+      <nav class="w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+        <ul class="flex space-x-4 md:space-x-6 whitespace-nowrap text-sm font-medium">
+          <li><a href="/" class="hover:text-navy transition-colors">ホーム</a></li>
+          {Object.entries(CATEGORIES).map(([key, label]) => (
+            <li><a href={`/category/${key}`} class="hover:text-navy transition-colors">{label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
