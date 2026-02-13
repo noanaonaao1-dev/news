@@ -16,6 +16,12 @@ const { post } = Astro.props;
 const { data } = post;
 const { Content } = await render(post);
 
+const allPosts = await getCollection('posts');
+const latestPosts = allPosts
+  .filter(p => p.slug !== post.slug)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
+
 const categoryLabel = CATEGORIES[data.category as keyof typeof CATEGORIES];
 const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
   year: 'numeric',
@@ -89,6 +95,37 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
       </div>
     </div>
   </article>
+
+  <section class="mt-16 border-t border-gray-100 pt-8">
+    <h2 class="text-xl font-bold text-navy-dark mb-6 flex items-center">
+      <span class="w-1.5 h-6 bg-navy-dark mr-2"></span>
+      最新のニュース
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      {latestPosts.map((post) => (
+        <a href={`/post/${post.slug}`} class="flex gap-4 group">
+          <div class="flex-shrink-0 w-20 h-20 overflow-hidden bg-gray-100">
+            <img
+              src={post.data.image}
+              alt={post.data.title}
+              width="80"
+              height="80"
+              loading="lazy"
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
+          <div class="flex flex-col justify-center">
+            <h3 class="text-sm font-bold leading-tight line-clamp-2 group-hover:text-navy transition-colors">
+              {post.data.title}
+            </h3>
+            <time datetime={post.data.date.toISOString()} class="text-[10px] text-gray-400 mt-1">
+              {new Date(post.data.date).toLocaleDateString('ja-JP')}
+            </time>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
 
 </Layout>
 

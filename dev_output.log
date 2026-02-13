@@ -34,3 +34,14 @@
 15:59:18 [watch] src/pages/post/[slug].astro
 15:59:20 [watch] src/components/AdSlot.astro
 15:59:20 [watch] src/components/AdSlot.astro
+16:03:13 [watch] src/components/Sidebar.astro
+16:03:13 [watch] src/components/Sidebar.astro
+16:03:25 [watch] src/pages/post/[slug].astro
+16:03:25 [watch] src/pages/post/[slug].astro
+16:03:36 [watch] src/content/posts/2026-02-13-sample-post.md
+16:03:36 [watch] src/content/posts/2026-02-13-sample-post.md
+16:03:36 [watch] src/content/posts/2026-02-13-sample-post.md
+16:03:36 [watch] src/content/posts/2026-02-13-sample-post.md
+16:03:36 [WARN] [glob-loader] Duplicate id "2026-02-13-sample-post" found in /app/src/content/posts/2026-02-13-sample-post.md. Later items with the same id will overwrite earlier ones.
+16:03:38 [glob-loader] Reloaded data from 2026-02-13-sample-post.md
+16:03:38 [glob-loader] Reloaded data from 2026-02-13-sample-post.md
