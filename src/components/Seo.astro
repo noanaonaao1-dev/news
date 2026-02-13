@@ -13,7 +13,7 @@ interface Props {
 const {
   title,
   description = "芸能フロントラインは、最新の芸能ニュース、女優、俳優、アイドル、映画などの情報を速報でお伝えするエンタメ情報サイトです。",
-  image = "https://geino-frontline.jp/og-default.webp",
+  image: propImage,
   canonical,
   type = 'website',
   publishedDate,
@@ -25,6 +25,8 @@ const siteName = "芸能フロントライン";
 const fullTitle = title ? `${title} | ${siteName}` : siteName;
 const siteUrl = "https://geino-frontline.jp";
 const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).toString();
+
+const image = propImage || `${siteUrl}/og-default.webp`;
 
 const jsonLd = type === 'article' ? {
   "@context": "https://schema.org",

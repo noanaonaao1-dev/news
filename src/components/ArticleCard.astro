@@ -20,7 +20,7 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
 <article class="flex gap-4 group">
   <a href={`/post/${slug}`} class="flex-shrink-0 w-24 h-24 md:w-32 md:h-32 overflow-hidden bg-gray-100 border border-gray-100">
     <img
-      src={data.image}
+      src={data.image || '/placeholder.webp'}
       alt={data.title}
       width="128"
       height="128"

@@ -9,7 +9,7 @@
 
 ## 2. フロントマターの設定
 
-ファイルの先頭に、以下の形式で記事のメタデータを記述します。すべての項目が必須です。
+ファイルの先頭に、以下の形式で記事のメタデータを記述します。
 
 ```md
 ---
@@ -25,19 +25,28 @@ canonical: "https://geino-frontline.jp/post/new-movie"
 ```
 
 ### フィールド詳細
-- **title**: 記事のタイトル。h1タグとして使用されます。
-- **date**: 公開日時。ISO 8601 形式（JSTは `+09:00`）で記述してください。
-- **category**: `actress`, `actor`, `idol`, `movie`, `tv`, `music`, `scandal` から選択。
-- **tags**: 関連するキーワードの配列。
-- **author**: 執筆者名（通常は「編集部」）。
-- **description**: SEO用の説明文。
-- **image**: R2などのCDNにアップロードした画像のフルURL。
-- **canonical**: 記事の正規URL。`/post/ファイル名のslug` の形式。
+- **title**: 記事のタイトル。h1タグとして使用されます。（必須）
+- **date**: 公開日時。ISO 8601 形式（JSTは `+09:00`）で記述してください。（必須）
+- **category**: `actress`, `actor`, `idol`, `movie`, `tv`, `music`, `scandal` から選択。（必須）
+- **tags**: 関連するキーワードの配列。（必須）
+- **author**: 執筆者名（通常は「編集部」）。（任意、デフォルトは「編集部」）
+- **description**: SEO用の説明文。（必須）
+- **image**: R2などのCDNにアップロードした画像のフルURL。（任意。設定しない場合はデフォルト画像が表示されます）
+- **canonical**: 記事の正規URL。`/post/ファイル名のslug` の形式。（任意）
 
-## 3. 本文の構成
+## 3. 本文の構成と埋め込み
 
 記事はセッション分けせず、通常の段落構成で記述してください。
 Google News の掲載を考慮し、正確な事実関係を優先して記述することを推奨します。
+
+### SNSの埋め込み (X/Instagram)
+本文中に X (旧Twitter) や Instagram の埋め込みコードをそのまま貼り付けることができます。
+スクリプトは自動的に読み込まれます。
+
+**例 (X):**
+```html
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">...</p>&mdash; ユーザー名 (@user) <a href="https://twitter.com/user/status/...">...</a></blockquote>
+```
 
 ## 4. 画像の準備
 

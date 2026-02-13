@@ -9,7 +9,7 @@ const postsCollection = defineCollection({
     tags: z.array(z.string()),
     author: z.string().default('編集部'),
     description: z.string(),
-    image: z.string(),
+    image: z.string().optional(),
     canonical: z.string().optional(),
   }),
 });
