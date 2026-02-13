@@ -12,7 +12,7 @@ export async function GET(context: any) {
   const categories = ['actress', 'actor', 'idol', 'movie', 'tv', 'music', 'scandal'];
   categories.forEach(cat => pages.push(`/category/${cat}`));
 
-  const siteUrl = context.site?.toString().replace(/\/$/, '') || 'https://geino-frontline.jp';
+  const siteUrl = context.site?.toString().replace(/\/$/, '') || 'https://news-8ea.pages.dev';
   const today = new Date().toISOString().split('T')[0];
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';

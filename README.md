@@ -38,8 +38,8 @@ category: "actress"
 tags: ["タグ1", "タグ2"]
 author: "編集部"
 description: "記事の説明文（120文字程度）"
-image: "https://cdn.geino-frontline.jp/images/2026/sample.webp"
-canonical: "https://geino-frontline.jp/post/slug"
+image: "https://news-8ea.pages.dev/placeholder.webp"
+canonical: "https://news-8ea.pages.dev/post/slug"
 ---
 ```
 
@@ -58,14 +58,14 @@ canonical: "https://geino-frontline.jp/post/slug"
      - Node.js version: `18` 以上を指定（Environment variables で `NODE_VERSION: 20` 等を設定）
 
 3. **環境変数の設定**:
-   - `SITE` (オプション): `https://geino-frontline.jp` (astro.config.mjs で設定済みですが上書き可能)
+   - `SITE` (オプション): `https://news-8ea.pages.dev` (astro.config.mjs で設定済みですが上書き可能)
 
 ## 🖼 画像の管理 (Cloudflare R2)
 
 本プロジェクトは画像を Cloudflare R2 等の外部CDNから配信することを想定しています。
 
 1. **R2バケットの作成**: Cloudflare ダッシュボードで R2 バケットを作成。
-2. **カスタムドメインの設定**: `cdn.geino-frontline.jp` 等をバケットに接続。
+2. **カスタムドメインの設定**: `news-8ea.pages.dev` 等をバケットに接続（または R2 の公開URLを使用）。
 3. **アップロード**: 画像を `images/2026/` などの階層でアップロード。
 4. **記事への記載**: Markdown の `image` フィールドに R2 の URL を記載します。
 
@@ -83,7 +83,7 @@ Google News に掲載するには、[Publisher Center](https://publishercenter.g
 
 - **基本情報**: サイト名、ロゴ（512x512 px推奨）
 - **コンテンツ**:
-  - セクション1: `https://geino-frontline.jp/news-sitemap.xml` (Feed または Sitemap として登録)
+  - セクション1: `https://news-8ea.pages.dev/news-sitemap.xml` (Feed または Sitemap として登録)
 - **確認が必要なページ**:
   - 運営者情報: `/about`
   - プライバシーポリシー: `/policy`

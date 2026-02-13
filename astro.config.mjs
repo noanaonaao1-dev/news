@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://geino-frontline.jp',
+  site: 'https://news-8ea.pages.dev',
   integrations: [tailwind()],
   output: 'static',
   trailingSlash: 'never',

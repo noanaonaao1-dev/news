@@ -19,8 +19,8 @@ category: "actress"
 tags: ["タグ1", "タグ2"]
 author: "編集部"
 description: "記事の要約を120文字程度で。検索結果やSNSで表示されます。"
-image: "https://cdn.geino-frontline.jp/images/2026/sample.webp"
-canonical: "https://geino-frontline.jp/post/new-movie"
+image: "https://news-8ea.pages.dev/placeholder.webp"
+canonical: "https://news-8ea.pages.dev/post/new-movie"
 ---
 ```
 
