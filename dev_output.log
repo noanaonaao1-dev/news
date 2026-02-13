@@ -2,18 +2,16 @@
 > geino-frontline@1.0.0 dev
 > astro dev
 
-13:25:41 [types] Generated 1ms
-13:25:42 [content] Syncing content
-13:25:42 [content] Synced content
-13:25:42 [vite] Re-optimizing dependencies because vite config has changed
+13:56:45 [types] Generated 1ms
+13:56:46 [content] Syncing content
+13:56:46 [content] Synced content
+13:56:46 [vite] Re-optimizing dependencies because vite config has changed
 
- astro  v5.17.2 ready in 1073 ms
+ astro  v5.17.2 ready in 1769 ms
 
 ┃ Local    http://localhost:4321/
 ┃ Network  use --host to expose
 
-13:25:42 watching for file changes...
-13:26:12 [200] / 386ms
-13:26:13 [200] /post/2026-02-13-sample-post 15ms
-13:26:14 [200] / 7ms
-13:26:32 [200] /post/2026-02-13-sample-post 7ms
+13:56:46 watching for file changes...
+13:56:49 [200] /about 402ms
+13:56:51 [200] /contact 8ms
