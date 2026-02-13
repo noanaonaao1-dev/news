@@ -7,7 +7,7 @@ const allPosts = await getCollection('posts');
 const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<Layout>
+<Layout isHome={true}>
   <div class="mb-8 border-b-2 border-navy-dark pb-2">
     <h1 class="text-xl font-bold text-navy-dark flex items-center">
       <span class="w-2 h-6 bg-navy-dark mr-2"></span>

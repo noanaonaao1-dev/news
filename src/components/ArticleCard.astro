@@ -1,8 +1,9 @@
 ---
+import type { CollectionEntry } from 'astro:content';
 import { CATEGORIES } from '../utils/categories';
 
 interface Props {
-  post: any;
+  post: CollectionEntry<'posts'>;
 }
 
 const { post } = Astro.props;

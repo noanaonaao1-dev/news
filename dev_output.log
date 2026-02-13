@@ -15,3 +15,14 @@
 13:56:46 watching for file changes...
 13:56:49 [200] /about 402ms
 13:56:51 [200] /contact 8ms
+14:21:44 [watch] src/components/Seo.astro
+14:21:44 [watch] src/components/Seo.astro
+14:21:50 [watch] src/components/Layout.astro
+14:21:51 [watch] src/pages/index.astro
+14:21:51 [watch] src/pages/index.astro
+14:23:42 [watch] src/pages/post/[slug].astro
+14:23:42 [watch] src/pages/post/[slug].astro
+14:23:44 [watch] src/pages/rss.xml.ts
+14:23:44 [watch] src/pages/rss.xml.ts
+14:23:46 [watch] src/components/ArticleCard.astro
+14:23:46 [watch] src/components/ArticleCard.astro

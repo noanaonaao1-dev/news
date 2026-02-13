@@ -83,7 +83,13 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
         <Content />
       </div>
 
-      <AdSlot />
+      <div class="ad-middle-container">
+        <AdSlot />
+      </div>
+
+      <div class="ad-bottom-container mt-8">
+        <AdSlot />
+      </div>
 
       <div class="mt-12 pt-6 border-t border-gray-100">
         <p class="text-xs text-gray-400">
@@ -93,14 +99,14 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
     </div>
   </article>
 
-  <!-- Script to move the first AdSlot after the 2nd paragraph if possible -->
+  <!-- Script to move the middle AdSlot after the 2nd paragraph if possible -->
   <script is:inline>
     const content = document.querySelector('#article-content');
-    const adSlot = document.querySelector('.ad-slot');
-    if (content && adSlot) {
+    const middleAdContainer = document.querySelector('.ad-middle-container');
+    if (content && middleAdContainer) {
       const paragraphs = content.querySelectorAll('p');
       if (paragraphs.length >= 2) {
-        paragraphs[1].after(adSlot);
+        paragraphs[1].after(middleAdContainer);
       }
     }
   </script>

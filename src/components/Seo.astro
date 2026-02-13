@@ -7,6 +7,7 @@ interface Props {
   type?: 'website' | 'article';
   publishedDate?: string;
   modifiedDate?: string;
+  isHome?: boolean;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   type = 'website',
   publishedDate,
   modifiedDate,
+  isHome = false,
 } = Astro.props;
 
 const siteName = "芸能フロントライン";
@@ -50,6 +52,9 @@ const jsonLd = type === 'article' ? {
 
 <!-- Canonical -->
 <link rel="canonical" href={canonicalUrl} />
+
+<!-- Monetag Verification -->
+{isHome && <meta name="monetag" content="f5848ab4423da0fe3b17afc905e0ce97" />}
 
 <!-- Primary Meta Tags -->
 <title>{fullTitle}</title>
