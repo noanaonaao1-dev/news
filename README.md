@@ -7,7 +7,7 @@ Astro v5 + TypeScript で構築された、SEO・Google News 最適化済みの�
 - **SEO最適化**: JSON-LD (NewsArticle), パンくずリスト, canonical, OGP, Twitter Card 対応
 - **Google News対応**: `news-sitemap.xml` の自動生成、セマンティックな記事構造
 - **パフォーマンス**: Lighthouse 高スコアを目指した設計（画像CLS対策、WebP推奨、LazyLoad）
-- **広告対応**: Monetag 等の広告プレースホルダー（記事中・記事下）をコンポーネント化
+- **広告対応**: Monetag（Vignette/Tag）を全ページに自動挿入
 
 ## 🛠 技術スタック
 - **Framework**: Astro v5
@@ -20,7 +20,7 @@ Astro v5 + TypeScript で構築された、SEO・Google News 最適化済みの�
 /
 ├── src/
 │   ├── content/posts/   # 記事（Markdown）
-│   ├── components/      # UIコンポーネント（Layout, Seo, AdSlot等）
+│   ├── components/      # UIコンポーネント（Layout, Seo, Header等）
 │   ├── pages/           # ページ、RSS、Sitemap生成
 │   └── utils/           # カテゴリ定義、ユーティリティ
 ├── public/              # 静的アセット（ロゴ、プレースホルダー）
@@ -42,13 +42,6 @@ image: "https://cdn.geino-frontline.jp/images/2026/sample.webp"
 canonical: "https://geino-frontline.jp/post/slug"
 ---
 ```
-
-**標準構成テンプレ：**
-1. 速報要約 (`<h2>`)
-2. 公式発表内容 (`<h2>`)
-3. ネットの反応 (`<h2>`)
-4. 背景・仕組み解説 (`<h2>`)
-5. 今後の影響・展望 (`<h2>`)
 
 ## 🚢 デプロイ手順 (Cloudflare Pages)
 
@@ -78,11 +71,11 @@ canonical: "https://geino-frontline.jp/post/slug"
 
 ## 💰 広告 (Monetag) の設置
 
-`src/components/AdSlot.astro` のプレースホルダーを実際のタグに書き換えてください。
+本プロジェクトでは、`src/layouts/Layout.astro` 内に Monetag の Vignette および Tag スクリプトが全ページ共通で埋め込まれています。
 
-1. [Monetag](https://monetag.com/) でサイトを登録し、広告タグ（Native Banner等）を取得。
-2. `AdSlot.astro` 内の `<!-- Monetag Tag Placeholder -->` 部分にタグを貼り付けます。
-3. 必要に応じて `YOUR_ZONE_ID` などを差し替えてください。
+1. [Monetag](https://monetag.com/) でサイトを登録。
+2. すでにコード内に設定されている Zone ID (`10606549`, `10606570`) を、ご自身の ID に必要に応じて差し替えてください。
+3. サイト認証用の meta タグ（`monetag`）は `src/pages/index.astro` に記載されています。
 
 ## 📰 Google News Publisher Center への申請
 
