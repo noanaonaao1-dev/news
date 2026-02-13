@@ -38,11 +38,11 @@ export async function GET(context: any) {
     xml += '  </url>\n';
   });
 
-  xml += '</urlset>';
+  xml += '  </urlset>';
 
   return new Response(xml, {
     headers: {
-      'Content-Type': 'application/xml; charset=utf-8'
+      'Content-Type': 'application/xml'
     },
   });
 }
