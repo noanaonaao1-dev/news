@@ -5,7 +5,7 @@ category: "actress"
 tags: ["橋本環奈","映画","ミステリー"]
 author: "編集部"
 description: "女優の橋本環奈が、2026年春公開予定の新作映画で主演を務めることが発表されました。累計100万部を突破した人気ミステリー小説の実写化プロジェクトで、橋本は難事件に挑む若手刑事を演じます。
-"canonical: "https://geino-frontline.jp/post/2026-02-13-sample-post"
+canonical: "https://geino-frontline.jp/post/2026-02-13-sample-post"
 ---
 
 女優の橋本環奈（27）が、2026年春に全国公開される映画『青い迷宮の真実（仮題）』に主演することが13日、明らかになりました。
