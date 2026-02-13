@@ -12,22 +12,26 @@ export async function GET(context: any) {
   const siteUrl = context.site?.toString().replace(/\/$/, '') || 'https://geino-frontline.jp';
   const siteName = '芸能フロントライン';
 
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
-${displayPosts.map(post => `  <url>
-    <loc>${siteUrl}/post/${post.slug}</loc>
-    <news:news>
-      <news:publication>
-        <news:name>${siteName}</news:name>
-        <news:language>ja</news:language>
-      </news:publication>
-      <news:publication_date>${post.data.date.toISOString().split('.')[0]}Z</news:publication_date>
-      <news:title>${post.data.title}</news:title>
-    </news:news>
-  </url>`).join('\n')}
-</urlset>`.trim();
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">\n';
 
-  return new Response(sitemap, {
+  displayPosts.forEach(post => {
+    xml += '  <url>\n';
+    xml += `    <loc>${siteUrl}/post/${post.slug}</loc>\n`;
+    xml += '    <news:news>\n';
+    xml += '      <news:publication>\n';
+    xml += `        <news:name>${siteName}</news:name>\n`;
+    xml += '        <news:language>ja</news:language>\n';
+    xml += '      </news:publication>\n';
+    xml += `      <news:publication_date>${post.data.date.toISOString().split('.')[0]}Z</news:publication_date>\n`;
+    xml += `      <news:title>${post.data.title}</news:title>\n`;
+    xml += '    </news:news>\n';
+    xml += '  </url>\n';
+  });
+
+  xml += '</urlset>';
+
+  return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8'
     },
