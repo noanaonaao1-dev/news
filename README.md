@@ -89,6 +89,23 @@ Google News に掲載するには、[Publisher Center](https://publishercenter.g
   - プライバシーポリシー: `/policy`
   - お問い合わせ: `/contact`
 
+## 🔐 管理者パネル
+
+本サイトには、記事の追加・更新・デプロイを行うための管理画面（`/admin`）が実装されています。
+
+### 必要な環境変数
+Cloudflare Pages の設定画面で以下の変数を設定してください：
+
+- `ADMIN_PASSWORD`: 管理画面へのログインパスワード
+- `GITHUB_TOKEN`: GitHub の Personal Access Token (repo スコープが必要)
+- `GITHUB_REPO`: 対象のリポジトリ名（例: `username/repository-name`）
+- `DEPLOY_HOOK_URL`: Cloudflare Pages の Deploy Hook URL
+
+### デプロイ回数の削減方法
+1. Cloudflare Pages の「ビルド設定」で「自動デプロイ」をオフにします。
+2. 管理者パネル（`/admin`）から記事を書き、GitHubに保存します。
+3. 全て準備が整ったら、管理画面トップの「🚀 サイトを更新（デプロイ）」ボタンを押して手動でビルドを開始します。
+
 ## 🧪 ローカル開発
 
 ```bash
