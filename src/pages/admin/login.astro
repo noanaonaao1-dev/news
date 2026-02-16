@@ -10,8 +10,7 @@ if (Astro.request.method === 'POST') {
     const password = data.get('password');
 
     if (password === import.meta.env.ADMIN_PASSWORD || password === process.env.ADMIN_PASSWORD) {
-      // Set a simple cookie (not very secure but simple as requested)
-      // In production, you'd want a more robust solution
+      // シンプルなクッキーによるセッション管理（ユーザーの要望通り）
       Astro.cookies.set('admin_session', 'true', { path: '/', httpOnly: true, secure: true, sameSite: 'strict' });
       return Astro.redirect('/admin');
     } else {

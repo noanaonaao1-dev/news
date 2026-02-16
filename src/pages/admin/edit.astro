@@ -20,7 +20,7 @@ let filename = '';
 let message = '';
 let error = '';
 
-// Load existing post
+// 既存記事の読み込み
 if (isEditing && GITHUB_TOKEN && GITHUB_REPO) {
   try {
     const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`, {
@@ -44,7 +44,7 @@ if (isEditing && GITHUB_TOKEN && GITHUB_REPO) {
   }
 }
 
-// Handle save
+// 保存処理
 if (Astro.request.method === 'POST') {
   const data = await Astro.request.formData();
   const formFilename = data.get('filename') as string;
@@ -76,7 +76,7 @@ if (Astro.request.method === 'POST') {
         if (!isEditing) {
           return Astro.redirect(`/admin/edit?path=${encodeURIComponent(filePath)}&saved=true`);
         }
-        // Update local SHA for subsequent saves
+        // 連続保存のために最新のSHAに更新
         const result = await response.json();
         sha = result.content.sha;
         content = formContent;

@@ -31,14 +31,6 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
   minute: '2-digit',
 });
 
-// For ad insertion, we would normally use a custom renderer or post-process the HTML.
-// In this basic version, we will instruct the user to use a placeholder or
-// we can attempt a simple string replace if we were rendering to string.
-// Since <Content /> is a component, we can't easily inject into it here.
-// Instead, I will use a wrapper that might help or just put ads around it.
-// BUT the requirement is "after 2nd paragraph".
-// A common Astro pattern is to use a "Slot" or just provide the Ad component to be used in MDX.
-// However, the user asked for Markdown (.md).
 ---
 
 <Layout

@@ -94,12 +94,18 @@ Google News に掲載するには、[Publisher Center](https://publishercenter.g
 本サイトには、記事の追加・更新・デプロイを行うための管理画面（`/admin`）が実装されています。
 
 ### 必要な環境変数
-Cloudflare Pages の設定画面で以下の変数を設定してください：
+Cloudflare Pages の「設定」>「環境変数」で以下の変数を設定してください：
 
 - `ADMIN_PASSWORD`: 管理画面へのログインパスワード
-- `GITHUB_TOKEN`: GitHub の Personal Access Token (repo スコープが必要)
+- `GITHUB_TOKEN`: GitHub の Personal Access Token (`repo` スコープが必要)
 - `GITHUB_REPO`: 対象のリポジトリ名（例: `username/repository-name`）
-- `DEPLOY_HOOK_URL`: Cloudflare Pages の Deploy Hook URL
+- `DEPLOY_HOOK_URL`: Cloudflare Pages の「設定」>「ビルド & デプロイ」>「デプロイフック」で作成した URL
+
+### Cloudflare Pages の設定
+管理画面で GitHub API を使用するため、以下の設定が必要です：
+
+1. **Compatibility Flag**: 「設定」>「関数」>「互換性フラグ」で `nodejs_compat` を追加してください（`Buffer` クラスを使用するため）。
+2. **Node.js バージョン**: `NODE_VERSION` を `20` 以上に設定することを推奨します。
 
 ### デプロイ回数の削減方法
 1. Cloudflare Pages の「ビルド設定」で「自動デプロイ」をオフにします。

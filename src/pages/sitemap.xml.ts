@@ -1,5 +1,7 @@
 import { getCollection } from 'astro:content';
 
+export const prerender = true;
+
 export async function GET(context: any) {
   const posts = await getCollection('posts');
   const pages = [
@@ -15,34 +17,25 @@ export async function GET(context: any) {
   const siteUrl = context.site?.toString().replace(/\/$/, '') || 'https://news-8ea.pages.dev';
   const today = new Date().toISOString().split('T')[0];
 
-  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-
-  // Pages
-  pages.forEach(page => {
-    xml += '  <url>\n';
-    xml += `    <loc>${siteUrl}${page === '' ? '/' : page}</loc>\n`;
-    xml += `    <lastmod>${today}</lastmod>\n`;
-    xml += `    <changefreq>${page === '' ? 'daily' : 'weekly'}</changefreq>\n`;
-    xml += `    <priority>${page === '' ? '1.0' : '0.8'}</priority>\n`;
-    xml += '  </url>\n';
-  });
-
-  // Posts
-  posts.forEach(post => {
-    xml += '  <url>\n';
-    xml += `    <loc>${siteUrl}/post/${post.slug}</loc>\n`;
-    xml += `    <lastmod>${post.data.date.toISOString().split('T')[0]}</lastmod>\n`;
-    xml += '    <changefreq>monthly</changefreq>\n';
-    xml += '    <priority>0.6</priority>\n';
-    xml += '  </url>\n';
-  });
-
-  xml += '  </urlset>';
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${pages.map(page => `  <url>
+    <loc>${siteUrl}${page === '' ? '/' : page}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${page === '' ? 'daily' : 'weekly'}</changefreq>
+    <priority>${page === '' ? '1.0' : '0.8'}</priority>
+  </url>`).join('\n')}
+${posts.map(post => `  <url>
+    <loc>${siteUrl}/post/${post.slug}</loc>
+    <lastmod>${post.data.date.toISOString().split('T')[0]}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`).join('\n')}
+</urlset>`.trim();
 
   return new Response(xml, {
     headers: {
-      'Content-Type': 'application/xml'
+      'Content-Type': 'application/xml; charset=UTF-8'
     },
   });
 }
