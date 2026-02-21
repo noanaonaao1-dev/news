@@ -9,8 +9,8 @@ if (!isAuthenticated(Astro.cookies)) {
 
 // @ts-ignore
 const runtime = Astro.locals.runtime;
-const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN || runtime?.env?.GITHUB_TOKEN;
-const GITHUB_REPO = import.meta.env.GITHUB_REPO || runtime?.env?.GITHUB_REPO;
+const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN || runtime?.env?.GITHUB_TOKEN || process.env.GITHUB_TOKEN;
+const GITHUB_REPO = import.meta.env.GITHUB_REPO || runtime?.env?.GITHUB_REPO || process.env.GITHUB_REPO;
 
 const url = new URL(Astro.request.url);
 const path = url.searchParams.get('path');

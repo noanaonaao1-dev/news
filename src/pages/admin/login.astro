@@ -3,17 +3,27 @@ import Layout from '../../components/Layout.astro';
 
 let error = '';
 
+// @ts-ignore
+const runtime = Astro.locals.runtime;
+const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD || runtime?.env?.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD;
+
 if (Astro.request.method === 'POST') {
   try {
     const data = await Astro.request.formData();
     const password = data.get('password');
 
-    if (password === import.meta.env.ADMIN_PASSWORD || password === process.env.ADMIN_PASSWORD) {
-      // シンプルなクッキーによるセッション管理（ユーザーの要望通り）
-      Astro.cookies.set('admin_session', 'true', { path: '/', httpOnly: true, secure: true, sameSite: 'strict' });
+    if (ADMIN_PASSWORD && password === ADMIN_PASSWORD) {
+      // シンプルなクッキーによるセッション管理
+      Astro.cookies.set('admin_session', 'true', {
+        path: '/',
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 60 * 60 * 24 * 7 // 1週間有効
+      });
       return Astro.redirect('/admin');
     } else {
-      error = 'パスワードが正しくありません。';
+      error = 'パスワードが正しくないか、設定されていません。';
     }
   } catch (e) {
     error = 'エラーが発生しました。';
@@ -45,5 +55,11 @@ if (Astro.request.method === 'POST') {
         ログイン
       </button>
     </form>
+
+    <div class="mt-8 pt-6 border-t border-gray-100">
+      <p class="text-[10px] text-gray-400 leading-relaxed">
+        ※ログインできない場合は、Cloudflare Pagesの環境変数に <code>ADMIN_PASSWORD</code> が設定されているか確認してください。
+      </p>
+    </div>
   </div>
 </Layout>

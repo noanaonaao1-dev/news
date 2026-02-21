@@ -8,9 +8,9 @@ if (!isAuthenticated(Astro.cookies)) {
 
 // @ts-ignore
 const runtime = Astro.locals.runtime;
-const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN || runtime?.env?.GITHUB_TOKEN;
-const GITHUB_REPO = import.meta.env.GITHUB_REPO || runtime?.env?.GITHUB_REPO;
-const DEPLOY_HOOK_URL = import.meta.env.DEPLOY_HOOK_URL || runtime?.env?.DEPLOY_HOOK_URL;
+const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN || runtime?.env?.GITHUB_TOKEN || process.env.GITHUB_TOKEN;
+const GITHUB_REPO = import.meta.env.GITHUB_REPO || runtime?.env?.GITHUB_REPO || process.env.GITHUB_REPO;
+const DEPLOY_HOOK_URL = import.meta.env.DEPLOY_HOOK_URL || runtime?.env?.DEPLOY_HOOK_URL || process.env.DEPLOY_HOOK_URL;
 
 let posts: any[] = [];
 let error = '';
