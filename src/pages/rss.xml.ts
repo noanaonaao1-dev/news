@@ -1,8 +1,11 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
+import { getMergedPosts } from '../utils/posts';
 
 export async function GET(context: any) {
-  const posts = await getCollection('posts');
+  // @ts-ignore
+  const runtime = context.locals.runtime;
+  const posts = await getMergedPosts(runtime?.env);
+
   return rss({
     title: '芸能フロントライン',
     description: 'エンタメの最前線を速報でお届け',

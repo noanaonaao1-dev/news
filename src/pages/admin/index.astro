@@ -1,5 +1,4 @@
 ---
-export const prerender = false;
 import Layout from '../../components/Layout.astro';
 import { isAuthenticated } from '../../utils/auth';
 
@@ -7,9 +6,11 @@ if (!isAuthenticated(Astro.cookies)) {
   return Astro.redirect('/admin/login');
 }
 
-const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN;
-const GITHUB_REPO = import.meta.env.GITHUB_REPO || process.env.GITHUB_REPO;
-const DEPLOY_HOOK_URL = import.meta.env.DEPLOY_HOOK_URL || process.env.DEPLOY_HOOK_URL;
+// @ts-ignore
+const runtime = Astro.locals.runtime;
+const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN || runtime?.env?.GITHUB_TOKEN;
+const GITHUB_REPO = import.meta.env.GITHUB_REPO || runtime?.env?.GITHUB_REPO;
+const DEPLOY_HOOK_URL = import.meta.env.DEPLOY_HOOK_URL || runtime?.env?.DEPLOY_HOOK_URL;
 
 let posts: any[] = [];
 let error = '';
@@ -82,9 +83,16 @@ if (Astro.request.method === 'POST') {
     </div>
   </div>
 
+  <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+    <h3 class="text-blue-800 font-bold text-sm mb-1">現在の運用モード: GitHub + Cloudflare KV</h3>
+    <p class="text-blue-700 text-xs">
+      記事を保存すると GitHub と KV の両方に書き込まれます。KVにより、デプロイを待たずにサイトへ即時反映されます。
+    </p>
+  </div>
+
   {deployMessage && (
-    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
-      <p class="text-blue-700 text-sm">{deployMessage}</p>
+    <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+      <p class="text-green-700 text-sm">{deployMessage}</p>
     </div>
   )}
 

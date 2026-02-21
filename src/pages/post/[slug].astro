@@ -1,25 +1,25 @@
 ---
-import { getCollection, render } from 'astro:content';
 import Layout from '../../components/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { CATEGORIES } from '../../utils/categories';
+import { getPostBySlug, getMergedPosts } from '../../utils/posts';
+import { marked } from 'marked';
 
-export async function getStaticPaths() {
-  const posts = await getCollection('posts');
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
-}
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect('/404');
 
-const { post } = Astro.props;
-const { data } = post;
-const { Content } = await render(post);
+// @ts-ignore
+const runtime = Astro.locals.runtime;
+const post = await getPostBySlug(slug, runtime?.env);
 
-const allPosts = await getCollection('posts');
+if (!post) return Astro.redirect('/404');
+
+const { data, body } = post;
+const contentHtml = await marked.parse(body);
+
+const allPosts = await getMergedPosts(runtime?.env);
 const latestPosts = allPosts
-  .filter(p => p.slug !== post.slug)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .filter(p => p.slug !== slug)
   .slice(0, 4);
 
 const categoryLabel = CATEGORIES[data.category as keyof typeof CATEGORIES];
@@ -30,7 +30,6 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
   hour: '2-digit',
   minute: '2-digit',
 });
-
 ---
 
 <Layout
@@ -38,7 +37,7 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
   description={data.description}
   image={data.image}
   type="article"
-  publishedDate={data.date.toISOString()}
+  publishedDate={new Date(data.date).toISOString()}
   canonical={data.canonical}
 >
   <Breadcrumbs items={[{ text: categoryLabel, href: `/category/${data.category}` }, { text: data.title }]} />
@@ -56,7 +55,7 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
       <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500">
         <div class="flex items-center">
           <span class="mr-1">投稿日:</span>
-          <time datetime={data.date.toISOString()}>{formattedDate}</time>
+          <time datetime={new Date(data.date).toISOString()}>{formattedDate}</time>
         </div>
         <div class="flex items-center">
           <span class="mr-1">著者:</span>
@@ -78,9 +77,7 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
         </div>
       )}
 
-      <div id="article-content" class="content">
-        <Content />
-      </div>
+      <div id="article-content" class="content" set:html={contentHtml} />
 
       <div class="mt-12 pt-6 border-t border-gray-100">
         <p class="text-xs text-gray-400">
@@ -112,7 +109,7 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
             <h3 class="text-sm font-bold leading-tight line-clamp-2 group-hover:text-navy transition-colors">
               {post.data.title}
             </h3>
-            <time datetime={post.data.date.toISOString()} class="text-[10px] text-gray-400 mt-1">
+            <time datetime={new Date(post.data.date).toISOString()} class="text-[10px] text-gray-400 mt-1">
               {new Date(post.data.date).toLocaleDateString('ja-JP')}
             </time>
           </div>

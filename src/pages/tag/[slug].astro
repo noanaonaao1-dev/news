@@ -1,33 +1,25 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../../components/Layout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
-
-export async function getStaticPaths() {
-  const allPosts = await getCollection('posts');
-  const uniqueTags = [...new Set(allPosts.flatMap((post) => post.data.tags))];
-
-  return uniqueTags.map((tag) => ({
-    params: { slug: tag },
-  }));
-}
+import { getMergedPosts } from '../../utils/posts';
 
 const { slug } = Astro.params;
+if (!slug) return Astro.redirect('/404');
 
-const allPosts = await getCollection('posts');
-const tagPosts = allPosts
-  .filter((post) => post.data.tags.includes(slug))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+// @ts-ignore
+const runtime = Astro.locals.runtime;
+const allPosts = await getMergedPosts(runtime?.env);
+const tagPosts = allPosts.filter((post) => post.data.tags.includes(slug));
 ---
 
-<Layout title={`#${slug} のニュース`}>
-  <Breadcrumbs items={[{ text: `#${slug}` }]} />
+<Layout title={`タグ: ${slug}`}>
+  <Breadcrumbs items={[{ text: `タグ: ${slug}` }]} />
 
   <div class="mb-8 border-b-2 border-navy-dark pb-2">
     <h1 class="text-xl font-bold text-navy-dark flex items-center">
       <span class="w-2 h-6 bg-navy-dark mr-2"></span>
-      #{slug}
+      タグ: {slug}
     </h1>
   </div>
 
@@ -36,4 +28,8 @@ const tagPosts = allPosts
       <ArticleCard post={post} />
     ))}
   </div>
+
+  {tagPosts.length === 0 && (
+    <p class="text-gray-500 py-10 text-center">このタグの記事はありません。</p>
+  )}
 </Layout>

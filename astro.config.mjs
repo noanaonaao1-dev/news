@@ -6,12 +6,11 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   site: 'https://news-8ea.pages.dev',
   integrations: [tailwind()],
-  output: 'static',
+  output: 'server',
   adapter: cloudflare({
     platformProxy: {
       enabled: true,
     },
-    imageService: 'compile',
   }),
   trailingSlash: 'never',
   build: {

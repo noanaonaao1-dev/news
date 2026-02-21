@@ -1,33 +1,29 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../../components/Layout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { CATEGORIES } from '../../utils/categories';
-
-export async function getStaticPaths() {
-  const categories = Object.keys(CATEGORIES);
-  return categories.map((slug) => ({
-    params: { slug },
-  }));
-}
+import { getMergedPosts } from '../../utils/posts';
 
 const { slug } = Astro.params;
-const categoryLabel = CATEGORIES[slug as keyof typeof CATEGORIES];
+if (!slug) return Astro.redirect('/404');
 
-const allPosts = await getCollection('posts');
-const categoryPosts = allPosts
-  .filter((post) => post.data.category === slug)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const categoryLabel = CATEGORIES[slug as keyof typeof CATEGORIES];
+if (!categoryLabel) return Astro.redirect('/404');
+
+// @ts-ignore
+const runtime = Astro.locals.runtime;
+const allPosts = await getMergedPosts(runtime?.env);
+const categoryPosts = allPosts.filter((post) => post.data.category === slug);
 ---
 
-<Layout title={`${categoryLabel} 一覧`}>
+<Layout title={`${categoryLabel}のニュース`}>
   <Breadcrumbs items={[{ text: categoryLabel }]} />
 
   <div class="mb-8 border-b-2 border-navy-dark pb-2">
     <h1 class="text-xl font-bold text-navy-dark flex items-center">
       <span class="w-2 h-6 bg-navy-dark mr-2"></span>
-      {categoryLabel} ニュース
+      {categoryLabel}
     </h1>
   </div>
 
@@ -38,6 +34,6 @@ const categoryPosts = allPosts
   </div>
 
   {categoryPosts.length === 0 && (
-    <p class="text-gray-500 py-10 text-center">このカテゴリーの記事はまだありません。</p>
+    <p class="text-gray-500 py-10 text-center">このカテゴリーの記事はありません。</p>
   )}
 </Layout>
