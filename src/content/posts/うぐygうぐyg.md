@@ -2,7 +2,7 @@
 title: ""
 date: "2026-02-21T06:30:27.179Z"
 category: "actress"
-tags: []
+tags: [actor]
 author: "編集部"
 description: ""
 image: ""
