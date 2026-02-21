@@ -1,6 +1,7 @@
 ---
 import Layout from '../../components/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AdSlot from '../../components/AdSlot.astro';
 import { CATEGORIES } from '../../utils/categories';
 import { getPostBySlug, getMergedPosts } from '../../utils/posts';
 import { marked } from 'marked';
@@ -15,7 +16,21 @@ const post = await getPostBySlug(slug, runtime?.env);
 if (!post) return Astro.redirect('/404');
 
 const { data, body } = post;
-const contentHtml = await marked.parse(body);
+const rawContentHtml = await marked.parse(body);
+
+// 2番目の段落の後に広告を挿入するロジック
+const paragraphs = rawContentHtml.split('</p>');
+let contentHtml = rawContentHtml;
+let adInserted = false;
+
+if (paragraphs.length > 2) {
+  const firstPart = paragraphs.slice(0, 2).join('</p>') + '</p>';
+  const secondPart = paragraphs.slice(2).join('</p>');
+  // AdSlotはサーバーコンポーネントとしてレンダリングされる必要があるため、
+  // ここではプレースホルダーを挿入し、後でLayout側かコンポーネント側で置換するか、
+  // 直接.astroのテンプレート部分で分割して表示する。
+  // 今回はテンプレート部分で分割表示する。
+}
 
 const allPosts = await getMergedPosts(runtime?.env);
 const latestPosts = allPosts
@@ -77,7 +92,17 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
         </div>
       )}
 
-      <div id="article-content" class="content" set:html={contentHtml} />
+      <div id="article-content" class="content">
+        {paragraphs.length > 2 ? (
+          <>
+            <div set:html={paragraphs.slice(0, 2).join('</p>') + '</p>'} />
+            <AdSlot />
+            <div set:html={paragraphs.slice(2).join('</p>')} />
+          </>
+        ) : (
+          <div set:html={rawContentHtml} />
+        )}
+      </div>
 
       <div class="mt-12 pt-6 border-t border-gray-100">
         <p class="text-xs text-gray-400">

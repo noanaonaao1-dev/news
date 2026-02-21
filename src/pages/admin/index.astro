@@ -2,12 +2,14 @@
 import Layout from '../../components/Layout.astro';
 import { isAuthenticated } from '../../utils/auth';
 
-if (!isAuthenticated(Astro.cookies)) {
+// @ts-ignore
+const runtime = Astro.locals.runtime;
+const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD || runtime?.env?.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD;
+
+if (!isAuthenticated(Astro.cookies, ADMIN_PASSWORD)) {
   return Astro.redirect('/admin/login');
 }
 
-// @ts-ignore
-const runtime = Astro.locals.runtime;
 const GITHUB_TOKEN = import.meta.env.GITHUB_TOKEN || runtime?.env?.GITHUB_TOKEN || process.env.GITHUB_TOKEN;
 const GITHUB_REPO = import.meta.env.GITHUB_REPO || runtime?.env?.GITHUB_REPO || process.env.GITHUB_REPO;
 const DEPLOY_HOOK_URL = import.meta.env.DEPLOY_HOOK_URL || runtime?.env?.DEPLOY_HOOK_URL || process.env.DEPLOY_HOOK_URL;

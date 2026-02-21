@@ -14,7 +14,7 @@ if (Astro.request.method === 'POST') {
 
     if (ADMIN_PASSWORD && password === ADMIN_PASSWORD) {
       // シンプルなクッキーによるセッション管理
-      Astro.cookies.set('admin_session', 'true', {
+      Astro.cookies.set('admin_session', ADMIN_PASSWORD, {
         path: '/',
         httpOnly: true,
         secure: true,

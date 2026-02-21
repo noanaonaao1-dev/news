@@ -1,0 +1,27 @@
+---
+interface Props {
+  id?: string;
+}
+
+const { id = "monetag-ad" } = Astro.props;
+---
+
+<div class="ad-slot my-8 flex flex-col items-center">
+  <span class="text-[10px] text-gray-400 mb-1 uppercase tracking-widest">Advertisement</span>
+  <div class="w-full max-w-[728px] min-h-[90px] bg-gray-50 border border-gray-100 flex items-center justify-center overflow-hidden" id={id}>
+    <!-- Monetag Ad Tag Placeholder -->
+    <div class="text-xs text-gray-300">
+      <p>Sponsored Content</p>
+      <!--
+        Monetag Display Tag Implementation:
+        Insert your tag here (e.g., <script src="..."></script>)
+      -->
+    </div>
+  </div>
+</div>
+
+<style>
+  .ad-slot {
+    clear: both;
+  }
+</style>
