@@ -5,6 +5,8 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { CATEGORIES } from '../../utils/categories';
 import { getMergedPosts } from '../../utils/posts';
 
+export const prerender = false;
+
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect('/404');
 

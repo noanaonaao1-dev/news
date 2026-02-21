@@ -1,6 +1,8 @@
 import rss from '@astrojs/rss';
 import { getMergedPosts } from '../utils/posts';
 
+export const prerender = false;
+
 export async function GET(context: any) {
   // @ts-ignore
   const runtime = context.locals.runtime;

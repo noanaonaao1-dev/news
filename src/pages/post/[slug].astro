@@ -6,6 +6,8 @@ import { CATEGORIES } from '../../utils/categories';
 import { getPostBySlug, getMergedPosts } from '../../utils/posts';
 import { marked } from 'marked';
 
+export const prerender = false;
+
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect('/404');
 
@@ -102,6 +104,7 @@ const formattedDate = new Date(data.date).toLocaleDateString('ja-JP', {
         ) : (
           <div set:html={rawContentHtml} />
         )}
+        <AdSlot id="monetag-ad-bottom" />
       </div>
 
       <div class="mt-12 pt-6 border-t border-gray-100">

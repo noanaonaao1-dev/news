@@ -3,6 +3,8 @@ import Layout from '../components/Layout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { getMergedPosts } from '../utils/posts';
 
+export const prerender = false;
+
 // @ts-ignore
 const runtime = Astro.locals.runtime;
 const sortedPosts = await getMergedPosts(runtime?.env);
