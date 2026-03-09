@@ -13,7 +13,7 @@ export async function GET(context: any) {
   const newsPosts = allPosts.filter(post => post.data.date >= twoDaysAgo);
   const displayPosts = newsPosts.length > 0 ? newsPosts : allPosts.slice(0, 10);
 
-  const siteUrl = context.site?.toString().replace(/\/$/, '') || 'https://news-8ea.pages.dev';
+  const siteUrl = import.meta.env.SITE_URL || runtime?.env?.SITE_URL || context.site?.toString().replace(/\/$/, '') || 'https://news-8ea.pages.dev';
   const siteName = '芸能フロントライン';
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';

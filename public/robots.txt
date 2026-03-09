@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://news-8ea.pages.dev/sitemap.txt
-Sitemap: https://news-8ea.pages.dev/news-sitemap.xml

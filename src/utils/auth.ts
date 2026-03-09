@@ -1,16 +1,26 @@
 import type { AstroCookies } from 'astro';
 
-export function isAuthenticated(cookies: AstroCookies, password?: string) {
+async function hashPassword(password: string): Promise<string> {
+  const msgUint8 = new TextEncoder().encode(password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashHex;
+}
+
+export async function isAuthenticated(cookies: AstroCookies, password?: string) {
   const session = cookies.get('admin_session')?.value;
   if (!session) return false;
 
   if (password) {
-    return session === password;
+    const hashed = await hashPassword(password);
+    return session === hashed;
   }
 
-  // フォールバック（互換性のため）
-  return session === 'true' || !!session;
+  return !!session;
 }
+
+export { hashPassword };
 
 export function redirectToLogin() {
   return new Response(null, {

@@ -17,7 +17,7 @@ export async function GET(context: any) {
   const categories = ['actress', 'actor', 'idol', 'movie', 'tv', 'music', 'scandal'];
   categories.forEach(cat => pages.push(`/category/${cat}`));
 
-  const siteUrl = context.site?.toString().replace(/\/$/, '') || 'https://news-8ea.pages.dev';
+  const siteUrl = import.meta.env.SITE_URL || runtime?.env?.SITE_URL || context.site?.toString().replace(/\/$/, '') || 'https://news-8ea.pages.dev';
 
   let txt = pages.map(page => `${siteUrl}${page === '' ? '/' : page}`).join('\n');
   txt += '\n';

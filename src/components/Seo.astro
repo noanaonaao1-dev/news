@@ -23,7 +23,12 @@ const {
 
 const siteName = "芸能フロントライン";
 const fullTitle = title ? `${title} | ${siteName}` : siteName;
-const siteUrl = "https://news-8ea.pages.dev";
+
+// @ts-ignore
+const runtime = Astro.locals.runtime;
+const siteUrl = import.meta.env.SITE_URL || runtime?.env?.SITE_URL || "https://news-8ea.pages.dev";
+const monetagId = import.meta.env.MONETAG_VERIFICATION_ID || runtime?.env?.MONETAG_VERIFICATION_ID || "f5848ab4423da0fe3b17afc905e0ce97";
+
 const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).toString();
 
 const image = propImage || `${siteUrl}/og-default.webp`;
@@ -58,7 +63,7 @@ const jsonLd = type === 'article' ? {
 <!-- Site Verifications -->
 {isHome && (
   <>
-    <meta name="monetag" content="f5848ab4423da0fe3b17afc905e0ce97" />
+    <meta name="monetag" content={monetagId} />
     <meta name="google-site-verification" content="WwwPK2ldKQ2FR_L93CLr1gkbdgq0DIXEA_9QBWaCIm0" />
     <meta name="google-site-verification" content="D2mtVLxsUuSyYTmL2PUI2EmT3MhYL1Nhm-L-yDzqo2o" />
   </>

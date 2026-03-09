@@ -97,10 +97,22 @@ GitHub と Cloudflare KV の両方に記事データを保存することで、�
 ### 必要な環境変数
 Cloudflare Pages の「設定」>「環境変数」で以下の変数を設定してください：
 
+#### 基本設定
+- `SITE_URL`: サイトの公開URL (例: `https://news-8ea.pages.dev`)。サイトマップ、canonical、JSON-LD 等に使用されます。
+
+#### 管理画面 (SSR)
 - `ADMIN_PASSWORD`: 管理画面へのログインパスワード
 - `GITHUB_TOKEN`: GitHub の Personal Access Token (`repo` スコープが必要)
 - `GITHUB_REPO`: 対象のリポジトリ名（例: `username/repository-name`）
 - `DEPLOY_HOOK_URL`: Cloudflare Pages の「設定」>「ビルド & デプロイ」>「デプロイフック」で作成した URL
+
+#### 広告設定 (Monetag) - オプション
+未設定の場合はデフォルト値が使用されます。
+- `MONETAG_VERIFICATION_ID`: サイト認証用メタタグの ID
+- `MONETAG_ZONE_ID_1`: スクリプト1の Zone ID
+- `MONETAG_SCRIPT_SRC_1`: スクリプト1のソース URL
+- `MONETAG_ZONE_ID_2`: スクリプト2の Zone ID
+- `MONETAG_SCRIPT_SRC_2`: スクリプト2のソース URL
 
 ### Cloudflare Pages の設定
 即時反映と管理画面の動作のため、以下の設定が必要です：
@@ -108,7 +120,7 @@ Cloudflare Pages の「設定」>「環境変数」で以下の変数を設定�
 1. **KV プレフィックスのバインド**:
    - Cloudflare ダッシュボードで KV 名前空間を新規作成（例：`geino_posts_kv`）。
    - Pages プロジェクトの「設定」>「関数」>「KV 名前空間のバインディング」で、**変数を `POSTS_KV`** にして作成した KV をバインドしてください。
-2. **Compatibility Flag**: 「設定」>「関数」>「互換性フラグ」で `nodejs_compat` を追加してください（`Buffer` クラスを使用するため）。
+2. **Compatibility Flag**: 「設定」>「関数」>「互換性フラグ」で `nodejs_compat` を追加してください（Workers 環境での安定動作のため）。
 3. **Node.js バージョン**: `NODE_VERSION` を `20` 以上に設定することを推奨します。
 
 ### デプロイ回数の削減方法

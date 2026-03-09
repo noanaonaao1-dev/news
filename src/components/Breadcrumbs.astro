@@ -10,6 +10,10 @@ interface Props {
 
 const { items } = Astro.props;
 
+// @ts-ignore
+const runtime = Astro.locals.runtime;
+const siteUrl = import.meta.env.SITE_URL || runtime?.env?.SITE_URL || "https://news-8ea.pages.dev";
+
 const breadcrumbs = [
   { text: 'ホーム', href: '/' },
   ...items
@@ -22,7 +26,7 @@ const jsonLd = {
     "@type": "ListItem",
     "position": index + 1,
     "name": item.text,
-    "item": item.href ? `https://news-8ea.pages.dev${item.href}` : undefined
+    "item": item.href ? `${siteUrl}${item.href}` : undefined
   }))
 };
 ---

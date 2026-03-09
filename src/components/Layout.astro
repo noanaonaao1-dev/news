@@ -17,6 +17,13 @@ interface Props {
 }
 
 const { title, description, image, canonical, type, publishedDate, modifiedDate, isHome } = Astro.props;
+
+// @ts-ignore
+const runtime = Astro.locals.runtime;
+const zoneId1 = import.meta.env.MONETAG_ZONE_ID_1 || runtime?.env?.MONETAG_ZONE_ID_1 || '10606549';
+const scriptSrc1 = import.meta.env.MONETAG_SCRIPT_SRC_1 || runtime?.env?.MONETAG_SCRIPT_SRC_1 || 'https://gizokraijaw.net/vignette.min.js';
+const zoneId2 = import.meta.env.MONETAG_ZONE_ID_2 || runtime?.env?.MONETAG_ZONE_ID_2 || '10606570';
+const scriptSrc2 = import.meta.env.MONETAG_SCRIPT_SRC_2 || runtime?.env?.MONETAG_SCRIPT_SRC_2 || 'https://nap5k.com/tag.min.js';
 ---
 
 <!DOCTYPE html>
@@ -66,8 +73,8 @@ const { title, description, image, canonical, type, publishedDate, modifiedDate,
     <Footer />
 
     <!-- Monetag Scripts -->
-    <script is:inline>(function(s){s.dataset.zone='10606549',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-    <script is:inline>(function(s){s.dataset.zone='10606570',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <script is:inline define:vars={{ zoneId1, scriptSrc1 }}>(function(s){s.dataset.zone=zoneId1,s.src=scriptSrc1})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <script is:inline define:vars={{ zoneId2, scriptSrc2 }}>(function(s){s.dataset.zone=zoneId2,s.src=scriptSrc2})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
     <!-- SNS Embed Scripts -->
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

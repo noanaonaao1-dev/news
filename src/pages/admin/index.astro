@@ -6,7 +6,7 @@ import { isAuthenticated } from '../../utils/auth';
 const runtime = Astro.locals.runtime;
 const ADMIN_PASSWORD = import.meta.env.ADMIN_PASSWORD || runtime?.env?.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD;
 
-if (!isAuthenticated(Astro.cookies, ADMIN_PASSWORD)) {
+if (!(await isAuthenticated(Astro.cookies, ADMIN_PASSWORD))) {
   return Astro.redirect('/admin/login');
 }
 
